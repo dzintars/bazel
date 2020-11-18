@@ -3,10 +3,10 @@
   "compilerOptions": {
     "baseUrl": ".",
     "rootDir": ".",
-    "module": "ESNext",
+    "module": "CommonJS",
     "target": "ES2019",
     "lib": ["ES2019", "DOM", "DOM.iterable"],
-    "esModuleInterop": false,
+    "esModuleInterop": true,
     "noImplicitAny": false,
     "noImplicitThis": true,
     "importHelpers": true,
@@ -19,15 +19,7 @@
     "typeRoots": ["node_modules/@types"],
     "paths": {
       "@oswee/*": ["*", "bazel-bin/*", "bazel-genfiles/*"],
-      "@oswee/components/*": ["components/*/src"],
-      "@oswee/lib/*": ["lib/*/src"],
-      "@oswee/lib/shared/*": ["lib/shared/*/src"],
-      "@oswee/tools/*": ["tools/*/src"],
-      "@oswee/elements/*": ["lib/elements/oswee/*/src"],
-      "@oswee/packages/*": ["packages/*/src"],
-      "@oswee/platform/web/assets/*": ["platform/web/src/assets/*"],
-      "@oswee/container/*": ["platform/web/src/ui/containers/*/src"],
-      "@oswee/feature/*": ["platform/web/src/store/src/lib/features/*/src"]
+      "@oswee/packages/*": ["packages/*/src"]
     },
     "plugins": [
       {
