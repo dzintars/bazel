@@ -24,7 +24,6 @@
     "scripts": {
         "build": "bazel build //...",
         "test": "bazel test //...",
-        "dev": "webpack-dev-server --config ./webpack.config.ts",
-        "devs": "webpack serve --config ./webpack.config.ts"
+        "dev": "webpack serve --config ./webpack.config.ts"
     }
 }
