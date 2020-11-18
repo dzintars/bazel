@@ -1,0 +1,64 @@
+# Add rules here to build your software
+# See https://docs.bazel.build/versions/master/build-ref.html#BUILD_files
+
+
+load("@npm//@bazel/typescript:index.bzl", "ts_library", "ts_config", "ts_project")
+load("@npm//webpack-dev-server:index.bzl", "webpack_dev_server")
+
+filegroup(
+    name = "public",
+    srcs = glob([
+        "template.html",
+        "favicon.ico",
+    ]),
+)
+
+ts_library(
+    name = "srcs",
+    srcs = glob(
+        [
+            "**/*.ts",
+        ],
+        exclude = ["webpack.config.ts"],
+    ),
+    data = [],
+    deps = [],
+)
+
+ts_library(
+    name = "config",
+    srcs = ["webpack.config.ts"],
+    tsconfig = "tsconfig.json",
+    devmode_module = "esnext",
+    devmode_target = "esnext",
+    deps = [
+        # "//tools/webpack",
+        "@npm//@types/html-webpack-plugin",
+        "@npm//@types/node",
+        "@npm//@types/webpack",
+        "@npm//webpack",
+        "@npm//html-webpack-plugin",
+        "@npm//css-loader",
+        "@npm//style-loader",
+        "@npm//umd-compat-loader",
+    ],
+)
+
+webpack_dev_server(
+    name = "devserver",
+    args = [
+        "--config=webpack.config.js",
+        "--output=./bundle.js",
+        "--history-api-fallback",
+    ],
+    data = [
+        ":srcs",
+        ":public",
+        # ":config",
+        ":webpack.config.js",
+        "@npm//webpack-cli",
+    ],
+    tags = [
+        "ibazel_notify_changes",
+    ],
+)
