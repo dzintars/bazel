@@ -5,6 +5,7 @@
 
 # **********************************
 # CH01 - Variables
+# CH01 - Python
 # CH02 - Skylib
 # CH03 - NodeJS
 # CH04 - Golang
@@ -12,6 +13,7 @@
 # CH06 - Google Protobuf
 # CH07 - TypeScript
 # CH08 - SASS
+# CH09 - Docker
 # **********************************
 
 
@@ -39,6 +41,16 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
 
 
+
+# **********************************
+# Python
+# **********************************
+
+http_archive(
+    name = "rules_python",
+    url = "https://github.com/bazelbuild/rules_python/releases/download/0.1.0/rules_python-0.1.0.tar.gz",
+    sha256 = "b6d46438523a3ec0f3cead544190ee13223a52f6a6765a29eae7b7cc24cc83a0",
+)
 
 # **********************************
 # Skylib
@@ -226,3 +238,44 @@ npm_bazel_labs_dependencies()
 # **********************************
 # SASS
 # **********************************
+
+# **********************************
+# Docker
+# **********************************
+
+http_archive(
+    name = "io_bazel_rules_docker",
+    # patches = ["//:rules_docker.pr1650.patch"],
+    sha256 = "1698624e878b0607052ae6131aa216d45ebb63871ec497f26c67455b34119c80",
+    strip_prefix = "rules_docker-0.15.0",
+    urls = ["https://github.com/bazelbuild/rules_docker/releases/download/v0.15.0/rules_docker-v0.15.0.tar.gz"],
+)
+
+load(
+    "@io_bazel_rules_docker//repositories:repositories.bzl",
+    container_repositories = "repositories",
+)
+
+container_repositories()
+
+load("@io_bazel_rules_docker//repositories:deps.bzl", container_deps = "deps")
+
+container_deps()
+
+load("@io_bazel_rules_docker//container:container.bzl", "container_pull")
+
+container_pull(
+    name = "alpine_linux_amd64",
+    registry = "index.docker.io",
+    repository = "library/alpine",
+    tag = "3.8",
+)
+
+# load("@io_bazel_rules_docker//repositories:pip_repositories.bzl", "pip_deps")
+
+# pip_deps()
+
+# load("@io_bazel_rules_docker//go:image.bzl", _go_image_repos = "repositories")
+
+# _go_image_repos()
+

@@ -10,6 +10,7 @@ exports_files(
     [
         "tsconfig.base.json",
         # "package.json",
+        "rules_docker.pr1650.patch",
     ],
     visibility = ["//visibility:public"],
 )
