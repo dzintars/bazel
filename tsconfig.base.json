@@ -1,25 +1,28 @@
 {
   "compileOnSave": false,
+  "buildOnSave": false,
   "compilerOptions": {
+    "strict": true,
     "baseUrl": ".",
-    "rootDir": ".",
-    "module": "CommonJS",
-    "target": "ES2019",
-    "lib": ["ES2019", "DOM", "DOM.iterable"],
+    // "rootDir": ".",
+    "rootDirs": [".", "bazel-bin"],
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "node",
     "esModuleInterop": true,
-    "noImplicitAny": false,
-    "noImplicitThis": true,
-    "importHelpers": true,
-    "preserveConstEnums": true,
-    "removeComments": true,
-    "skipLibCheck": true,
-    "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true,
+    "importHelpers": true,
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "lib": ["ESNext", "DOM", "DOM.iterable"],
     "typeRoots": ["node_modules/@types"],
     "paths": {
-      "@oswee/*": ["*", "bazel-bin/*", "bazel-genfiles/*"],
-      "@oswee/packages/*": ["packages/*/src"]
+      // "@oswee/*": ["*", "bazel-bin/*"],
+      "@oswee/*": ["*", "dist/bin/*"],
+      "*": ["node_modules/*"]
     },
     "plugins": [
       {

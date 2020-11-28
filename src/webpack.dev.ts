@@ -1,19 +1,22 @@
 // import { BazelResolverPlugin, IBazelWebpackOptions } from '@oswee/tools/webpack'
 
-import * as webpack from 'webpack'
-import * as path from 'path'
-import HtmlWebpackPlugin from 'html-webpack-plugin'
-import * as fs from 'fs'
+// import * as webpack from 'webpack'
+// import * as path from 'path'
+// import * as HtmlWebpackPlugin from 'html-webpack-plugin'
+// import * as fs from 'fs'
 
-// import webpack from 'webpack'
-// import path from 'path'
-// import HtmlWebpackPlugin from 'html-webpack-plugin'
-// import fs from 'fs'
+import webpack from 'webpack'
+import path from 'path'
+import HtmlWebpackPlugin from 'html-webpack-plugin'
+import fs from 'fs'
 
 module.exports = (env: any, argv: any) => ({
+  context: __dirname, // to automatically find tsconfig.json
   mode: argv.mode || 'development',
-  target: 'web',
-  entry: './index.ts',
+  target: 'es2020',
+  entry: {
+    main: './index.ts',
+  },
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].bundle.js',
@@ -92,19 +95,21 @@ module.exports = (env: any, argv: any) => ({
   module: {
     rules: [
       {
-        test: /\.ts?$/,
+        test: '/\.ts?$/',
+        exclude: ['/node_modules/'],
         loader: require.resolve('ts-loader'),
+        options: {
+          configFile: 'tsconfig.base.json'
+        }
         // options: PnpWebpackPlugin.tsLoaderOptions(),
         // options: PnpWebpackPlugin.tsLoaderOptions({ transpileOnly: true }),
       },
       {
-        test: /\.css$/,
+        test: '/\.css$/',
         exclude: ['/node_modules/'],
         use: [
           { loader: require.resolve('style-loader') },
-          {
-            loader: require.resolve('css-loader'),
-          },
+          { loader: require.resolve('css-loader'), },
         ],
       },
     ],

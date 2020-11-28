@@ -1,0 +1,31 @@
+load("@npm//@bazel/typescript:index.bzl", "ts_config", "ts_library", "ts_project")
+
+package(default_visibility = ["//visibility:public"])
+
+ts_library(
+    name = "shell",
+    srcs = glob(
+        include = [
+            "src/**/*.ts",
+        ],
+    ),
+    # module_name = "@oswee/components/ui-taskbar",
+    # module_root = "src",
+    devmode_module = "esnext",
+    devmode_target = "esnext",
+    tsconfig = ":tsconfig",
+    deps = [
+        "@npm//lit-element",
+        "//protobuf/modules/v1:modules",
+        "//protobuf/modules/v1:v1",
+    ],
+)
+
+ts_config(
+    name = "tsconfig",
+    src = "tsconfig.app.json",
+    deps = [
+        "tsconfig.json",
+        "//:tsconfig.base.json",
+    ],
+)

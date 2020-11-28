@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../../dist/out-tsc",
+    "target": "ESNext",
+    "module": "ESNext",
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "declaration": true,
+    "inlineSources": true,
+    "types": ["node"],
+    "lib": ["DOM", "ESNext"],
+    "composite": true
+  },
+  "include": ["src"],
+  "exclude": ["src/**/*.spec.ts"]
+}
