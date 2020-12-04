@@ -4,7 +4,6 @@
   "compilerOptions": {
     "strict": true,
     "baseUrl": ".",
-    // "rootDir": ".",
     "rootDirs": [".", "bazel-bin"],
     "target": "ESNext",
     "module": "ESNext",
@@ -20,7 +19,6 @@
     "lib": ["ESNext", "DOM", "DOM.iterable"],
     "typeRoots": ["node_modules/@types"],
     "paths": {
-      // "@oswee/*": ["*", "bazel-bin/*"],
       "@oswee/*": ["*", "dist/bin/*"],
       "*": ["node_modules/*"]
     },

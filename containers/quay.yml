@@ -1,0 +1,101 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: quay
+  labels:
+    app: quay
+spec:
+  restartPolicy: Always
+  containers:
+    - name: postgres
+      image: docker.io/postgres:latest
+      resources:
+        requests:
+          cpu: 1
+          memory: 1Gi
+        limits:
+          cpu: 2
+          memory: 2Gi
+      env:
+        - name: POSTGRES_PASSWORD
+          value: password
+        - name: POSTGRES_USER
+          value: dzintars
+        - name: POSTGRES_DB
+          value: quay
+      ports:
+        - containerPort: 5432
+          hostPort: 5432
+          protocol: TCP
+      securityContext:
+        allowPrivilegeEscalation: false
+        privileged: true
+        readOnlyRootFilesystem: false
+      volumeMounts:
+        - mountPath: /var/lib/postgresql/data:Z
+          name: postgres_data
+    - name: redis
+      image: docker.io/redis:latest
+      resources:
+        requests:
+          cpu: 1
+          memory: 1Gi
+        limits:
+          cpu: 2
+          memory: 2Gi
+      ports:
+        - containerPort: 6379
+          hostPort: 6379
+          protocol: TCP
+      securityContext:
+        allowPrivilegeEscalation: false
+        privileged: true
+        readOnlyRootFilesystem: false
+      volumeMounts:
+        - mountPath: /var/lib/redis/data:Z
+          name: redis_data
+    - name: registry
+      image: quay.io/projectquay/quay:latest
+      resources:
+        requests:
+          cpu: 1
+          memory: 1Gi
+        limits:
+          cpu: 2
+          memory: 2Gi
+      ports:
+        - containerPort: 8080
+          hostPort: 8080
+          protocol: TCP
+      securityContext:
+        allowPrivilegeEscalation: false
+        privileged: true
+        readOnlyRootFilesystem: false
+      volumeMounts:
+        - mountPath: /conf/stack:Z
+          name: quay_config
+        - mountPath: /datastorage:Z
+          name: quay_storage
+
+  volumes:
+    - name: postgres_data
+      hostPath:
+        path: /home/dzintars/containers/github.com/dzintars/bazel/volumes/postgres/data
+        type: Directory
+    - name: redis_data
+      hostPath:
+        path: /home/dzintars/containers/github.com/dzintars/bazel/volumes/redis/data
+        type: Directory
+    - name: quay_config
+      hostPath:
+        path: /home/dzintars/containers/github.com/dzintars/bazel/volumes/quay/data/config
+        type: Directory
+    - name: quay_storage
+      hostPath:
+        path: /home/dzintars/containers/github.com/dzintars/bazel/volumes/quay/data/storage
+        type: Directory
+    # - name: some-file
+    #   hostPath:
+    #     path: /home/dzintars/some-file.txt
+    #     type: File
+
