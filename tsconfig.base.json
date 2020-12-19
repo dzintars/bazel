@@ -4,7 +4,7 @@
   "compilerOptions": {
     "strict": true,
     "baseUrl": ".",
-    "rootDirs": [".", "bazel-bin"],
+    "rootDirs": ["."],
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "node",
@@ -16,11 +16,11 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "sourceMap": true,
-    "lib": ["ESNext", "DOM", "DOM.iterable"],
+    "lib": ["ESNext"],
     "typeRoots": ["node_modules/@types"],
     "paths": {
-      "@oswee/*": ["*", "dist/bin/*"],
-      "*": ["node_modules/*"]
+      "*": ["node_modules/*"],
+      "@oswee/*": ["*", "dist/bin/*"]
     },
     "plugins": [
       {

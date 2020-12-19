@@ -9,7 +9,7 @@
     "declaration": true,
     "inlineSources": true,
     "types": ["node"],
-    "lib": ["DOM", "ESNext"],
+    "lib": ["ESNext", "DOM", "DOM.iterable"],
     "composite": true
   },
   "include": ["src"],
