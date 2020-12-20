@@ -45,6 +45,7 @@ data "template_file" "user_data" {
   template = file("${path.module}/cloud_init.cfg")
   vars = {
     VM_USER = var.VM_USER
+    VM_HOSTNAME = var.VM_HOSTNAME
   }
 }
 
@@ -88,9 +89,13 @@ resource "libvirt_cloudinit_disk" "cloudinit" {
 
 resource "libvirt_domain" "vm" {
   count = var.VM_COUNT
-  name = "${var.VM_HOSTNAME}-${count.index}"
+  name = "${var.VM_HOSTNAME}.ocp.oswee.com"
   memory = "1024"
   vcpu = 1
+
+  cpu = {
+    mode = "host-passthrough"
+  }
 
   cloudinit = libvirt_cloudinit_disk.cloudinit.id
 
